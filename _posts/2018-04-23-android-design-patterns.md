@@ -63,7 +63,7 @@ public class Singleton {
 
 我们通过一个例子来引出Builder模式。假设有一个Person类，我们通过该Person类来构建一大批人，这个Person类里有很多属性，最常见的比如name，age，weight，height等等，并且我们允许这些值不被设置，也就是允许为null，该类的定义如下。
 
-<pre>
+```java
 public class Person {
     private String name;
     private int age;
@@ -102,29 +102,29 @@ public class Person {
         this.weight = weight;
     }
 }
-</pre>
+```
 
 然后我们为了方便可能回定义这样一个构造方法。
 
-<pre>
+```java
 public Person(String name, int age, double height, double weight) {
 	this.name = name;
 	this.age = age;
 	this.height = height;
 	this.weight = weight;
 }
-</pre>
+```
 
 或许为了方便new对象，你还会定义一个空的构造方法
 
-<pre>
+```java
 public Person() {
 }
-</pre>
+```
 
 甚至有时候你很懒，只想传部分参数，你还会定义如下类似的构造方法。
 
-<pre>
+```java
 public Person(String name) {
 	this.name = name;
 }
@@ -139,23 +139,23 @@ public Person(String name, int age, double height) {
 	this.age = age;
 	this.height = height;
 }
-</pre>
+```
 
 于是你创建对象就变成这样了
 
-<pre>
+```java
 Person p1=new Person();
 Person p2=new Person("张三");
 Person p3=new Person("李四",18);
 Person p4=new Person("王五",21,180);
 Person p5=new Person("赵六",17,170,65.4);
-</pre>
+```
 
 可以想象一下这样创建的坏处，最直观的就是四个参数的构造函数的最后面的两个参数到底是什么意思，可读性不怎么好，如果不点击看源码，鬼知道哪个是weight哪个是height。还有一个问题就是当有很多参数时，编写这个构造函数就会显得异常麻烦，这时候如果换一个角度，试试Builder模式，你会发现代码的可读性一下子就上去了。
 
 我们给Person增加一个静态内部类Builder类，并修改Person类的构造函数，代码如下。
 
-<pre>
+```java
 public class Person {
     private String name;
     private int age;
@@ -228,13 +228,13 @@ public class Person {
         }
     }
 }
-</pre>
+```
 
 从上面的代码中我们可以看到，我们在Builder类里定义了一份与Person类一模一样的变量，通过一系列的成员函数进行设置属性值，但是返回值都是this，也就是都是Builder对象，最后提供了一个build函数用于创建Person对象，返回的是Person对象，对应的构造函数在Person类中进行定义，也就是构造函数的入参是Builder对象，然后依次对自己的成员变量进行赋值，对应的值都是Builder对象中的值。此外Builder类中的成员函数返回Builder对象自身的另一个作用就是让它支持链式调用，使代码可读性大大增强。
 
 于是我们就可以这样创建Person类。
 
-<pre>
+```java
 Person.Builder builder=new Person.Builder();
 Person person=builder
 		.name("张三")
@@ -242,13 +242,13 @@ Person person=builder
 		.height(178.5)
 		.weight(67.4)
 		.build();
-</pre>
+```
 
 有没有觉得创建过程一下子就变得那么清晰了。对应的值是什么属性一目了然，可读性大大增强。
 
 其实在Android中， Builder模式也是被大量的运用。比如常见的对话框的创建
 
-<pre>
+```java
 AlertDialog.Builder builder=new AlertDialog.Builder(this);
 AlertDialog dialog=builder.setTitle("标题")
 		.setIcon(android.R.drawable.ic_dialog_alert)
@@ -267,7 +267,7 @@ AlertDialog dialog=builder.setTitle("标题")
 		})
 		.create();
 dialog.show();
-</pre>
+```
 
 #	观察者模式
 
