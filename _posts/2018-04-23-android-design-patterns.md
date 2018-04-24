@@ -1,8 +1,8 @@
 ---
 title: Android设计模式
 subtitle: "Android 开发中常用设计模式"
-auth-r: Jawky
-lay-ut: post
+author: Jawky
+layout: post
 date: 2018/4/23 17:39:01  
 tags:
     - 学习
